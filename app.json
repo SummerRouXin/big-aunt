@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/user_info/index",
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fc5f9b",
+    "navigationBarTitleText": "HelloWorld",
+    "navigationBarTextStyle":"black"
+  }
+}

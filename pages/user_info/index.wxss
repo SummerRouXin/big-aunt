@@ -1,0 +1,46 @@
+.content {
+
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 34rpx;
+  margin: 40rpx 0 20rpx 0;
+}
+
+.picker{
+  padding: 13px;
+  background-color: #f6f6f6;
+  font-size: 30rpx;
+}
+.picker::after {
+  /* margin-left: 350rpx;
+  margin-right: 30rpx;
+  font-size: 30rpx; */
+  /* width: 30rpx;
+  height: 30rpx; */
+  /* content: "\E608"; */
+  /* content: url(http://chuantu.biz/t6/323/1528075086x-1404755576.png) */
+}
+
+.btn_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.submit_btn {
+  margin-top: 100rpx;
+  width: 60%;
+  height: 70rpx;
+  font-size: 100rpx;
+  background-color: #7f7b7b;
+}
+
+.skip_btn_wrapper {
+  font-size: 30rpx;
+  margin-top: 30rpx;
+  color: #7f7b7b;
+}
