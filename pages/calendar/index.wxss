@@ -1,0 +1,119 @@
+.cal_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  padding: 40rpx 0;
+}
+
+.left_arrow {
+  width: 120rpx;
+  height: 50rpx;
+  text-align: center;
+}
+
+.cal_title {
+  flex: 1;
+  text-align: center;
+}
+
+.right_arrow {
+  width: 120rpx;
+  height: 50rpx;
+  text-align: center;
+}
+
+
+.calendar_table {
+  width: 100%;
+  background-color: #fff;
+  display: block;
+  table-layout: fixed;
+  border-top: 2rpx solid #f5f5f5;
+}
+
+.header_tr {
+  width: 100%;
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.header_th {
+  color: #8c8c8c;
+  /* background-color: #fad052; */
+  font-size: 30rpx;
+  padding: 10rpx;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.day_tr_view {
+  width: 100%;
+  float: left;
+}
+
+.day_td_view {
+  display: inline-block;
+  width: 14.2%;
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  color: #1c1c1c;
+  font-size: 30rpx;
+  position: relative;
+}
+.day_td_view_gray {
+  color: #b5b5b5;
+}
+
+.clock_title {
+  font-size: 30rpx;
+  color: #b1b1b1;
+  margin: 0 20rpx 10rpx 20rpx;
+}
+
+.clock_icon {
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  right: 0;
+  top: 10rpx;
+  background-color: #fc5f9b;
+  border: solid #fc5f9b 1rpx;
+  border-radius: 50%;
+  font-size: 20rpx;
+}
+
+.checkbox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.clock_text {
+  color: #686868;
+  font-size: 30rpx;
+  display: inline-block;
+  margin: 0 20rpx;
+}
+
+.tips {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  margin-top: 30rpx;
+}
+
+.tips_text {
+
+}
+
+.text_area {
+  border:solid 1rpx #b1b1;
+
+}
+.test {
+  color: red;
+}

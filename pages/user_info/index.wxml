@@ -1,41 +1,11 @@
-<view class="content">
-  <view>
-    <text class="title">您的性别？</text>
-    <picker bindchange="bindPickerGenderChange" value="{{genderIndex}}" range="{{genderRange}}">
-      <view class="picker">
-        当前选择：{{genderRange[genderIndex]}}
-      </view>
-    </picker>
-  </view>
-  <view>
-    <text class="title">您的月经一般持续多久？</text>
-    <picker bindchange="bindPickerDurationChange" value="{{durationIndex}}" range="{{durationRange}}">
-      <view class="picker">
-        当前选择：{{durationRange[durationIndex]}}天
-      </view>
-    </picker>
-  </view>
-  <view>
-    <text class="title">您的月间隔多久？</text>
-    <picker bindchange="bindPickerIntervalChange" value="{{intervalIndex}}" range="{{intervalRange}}">
-      <view class="picker">
-        当前选择：{{intervalRange[intervalIndex]}}天
-      </view>
-    </picker>
-  </view>
-  <view>
-    <text class="title">最近一次月经时间</text>
-    <picker mode="date" bindchange="bindPickerRecentChange" value="{{recentDate}}" start="{{startDate}}" end="{{recentDate}}">
-      <view class="picker">
-        当前选择：{{recentDate}}
-      </view>
-    </picker>
-  </view>
-  <view class="submit_btn">提交</view>
-  <view class="btn_wrapper skip_btn_wrapper">跳过此步骤</view>
+<import src="setting.wxml" />
+<import src="my_info.wxml" />
+<view>
+  <template wx:if="{{hasSetted == false}}"
+  is="setting"
+  data="{{ genderRange, genderIndex, durationRange, durationIndex, intervalRange, intervalIndex, recentDate, startDate, hasFinishedSubmit, sexChoose }}"
+  />
+  <template wx:if="{{hasSetted == true || settingInfo.genderIndex}}" is="my_info"
+  data="{{ canIUse, userInfo, durationRange, durationIndex, intervalRange, intervalIndex, settingInfo }}"
+  />
 </view>
-
-<!-- <button class="submit_btn" type="default" size="mini" loading="{{loading}}"
-  plain="{{plain}}" disabled="{{disabled}}" bindtap="default">
-  提交
-  </button> -->

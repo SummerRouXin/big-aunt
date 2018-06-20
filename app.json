@@ -1,12 +1,31 @@
 {
   "pages":[
+    "pages/search/index",
     "pages/user_info/index",
-    "pages/index/index"
+    "pages/calendar/index"
+
+
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fc5f9b",
     "navigationBarTitleText": "HelloWorld",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/calendar/index",
+      "text": "日历"
+    }, {
+      "pagePath": "pages/user_info/index",
+      "text": "设置"
+    },{
+      "pagePath": "pages/search/index",
+      "text": "查询"
+    }],
+    "backgroundColor": "#c6c4c4",
+    "color": "white",
+    "borderStyle": "white",
+    "selectedColor": "#fc5f9b"
   }
 }

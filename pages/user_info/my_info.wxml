@@ -1,0 +1,12 @@
+<template name="my_info">
+  <!-- <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button> -->
+  <view class="user">
+    <view class="avatar" style="background-image:url({{userInfo.avatarUrl}});"></view>
+    <view class="user_name">{{userInfo.nickName}}</view>
+    <view class="goto_setting" bindtap="bindGoToSetting">去设置</view>
+  </view>
+  <view class="setting">
+    <view class="duration">月经持续天数：{{durationRange[settingInfo.durationIndex]}}</view>
+    <view class="interval">平均月经周期：{{intervalRange[settingInfo.intervalIndex]}}</view>
+  </view>
+</template>

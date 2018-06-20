@@ -1,0 +1,44 @@
+<template name="setting">
+  <view class="content">
+    <view>
+      <text class="title">您的性别？</text>
+      <picker bindchange="bindPickerGenderChange" value="{{genderIndex}}" range="{{genderRange}}">
+        <view class="picker_wrapper">
+          <view class="picker_view">当前选择：{{genderRange[genderIndex]}}</view>
+          <view class="right_arrow">》</view>
+        </view>
+      </picker>
+    </view>
+    <view wx:if="{{sexChoose}}">
+      <view>
+        <text class="title">您的月经一般持续多久？</text>
+        <picker  bindchange="bindPickerDurationChange" value="{{durationIndex}}" range="{{durationRange}}">
+          <view class="picker_wrapper">
+            <view class="picker_view">当前选择：{{durationRange[durationIndex]}}天</view>
+            <view class="right_arrow">》</view>
+          </view>
+        </picker>
+      </view>
+      <view>
+        <text class="title">您的月经间隔多久？</text>
+        <picker bindchange="bindPickerIntervalChange" value="{{intervalIndex}}" range="{{intervalRange}}">
+          <view class="picker_wrapper">
+            <view class="picker_view">当前选择：{{intervalRange[intervalIndex]}}天</view>
+            <view class="right_arrow">》</view>
+          </view>
+        </picker>
+      </view>
+      <view>
+        <text class="title">最近一次月经时间</text>
+        <picker mode="date" bindchange="bindPickerRecentChange" value="{{recentDate}}" start="{{startDate}}" end="{{recentDate}}">
+          <view class="picker_wrapper">
+            <view class="picker_view">当前选择：{{recentDate}}</view>
+            <view class="right_arrow">》</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="{{hasFinishedSubmit ? 'submit_btn' : 'submit_btn submit_btn_gray'}}" bindtap="bindSubmitTap">提交</view>
+    <view class="btn_wrapper skip_btn_wrapper" bindtap="bindSkipTap">跳过此步骤 >></view>
+  </view>
+</template>

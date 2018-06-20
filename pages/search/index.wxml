@@ -1,0 +1,7 @@
+<import src="../common/index.wxml" />
+<view>
+  <template wx:if="{{hasSetted == false}}"
+  is="setting"
+  data="{{ genderRange, genderIndex, durationRange, durationIndex, intervalRange, intervalIndex, recentDate, startDate, hasFinishedSubmit, sexChoose }}"
+  />
+</view>
