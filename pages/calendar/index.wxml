@@ -7,11 +7,11 @@
   </view>
   <view >
     <table class="calendar_table" cellspacing="0">
-      <tbody>
+      <tbody class="tbody">
         <tr class="header_tr">
           <th class="header_th" wx:for="{{weekArr}}" wx:for-item="weekItem" wx:key="header_th">{{weekItem}}</th>
         </tr>
-        <view class="day_tr_view">
+        <view class="day_tr_view ">
           <view wx:if="{{grayLastArr.length > 0}}" class="day_td_view day_td_view_gray"
             wx:for="{{grayLastArr}}" wx:for-item="grayLastItem" wx:key="day_td_view">
             {{grayLastItem}}
@@ -19,15 +19,22 @@
           <view class="day_td_view" bindtap="bindDayTap" data-content="{{dayItem}}"
             wx:for="{{dayArr}}" wx:for-item="dayItem" wx:key="day_td_view">
             {{dayItem}}
-            <view wx:if="{{switchedArr[dayItem-1]}}" class="clock_icon">卡</view>
+            <view wx:if="{{switchedArr[dayItem-1]}}" class="clock_icon"></view>
           </view>
           <view wx:if="{{grayNextArr.length > 0}}" class="day_td_view day_td_view_gray"
             wx:for="{{grayNextArr}}" wx:for-item="grayNextItem" wx:key="day_td_view">
             {{grayNextItem}}
           </view>
         </view>
+        <view class="clear"></view>
       </tbody>
     </table>
+  </view>
+  <view class="mark">
+    <view class="mark_icon card_icon"></view><view class="mark_text">打卡</view>
+    <view class="mark_icon aunt_icon"></view><view class="mark_text">经期</view>
+    <view class="mark_icon ovulate_icon"></view><view class="mark_text">排卵期</view>
+    <view class="mark_icon safe_icon"></view><view class="mark_text">安全期</view>
   </view>
   <view wx:if="{{hasClick}}" class="clock">
     <view class="clock_title">{{selectYear || '--'}}年{{selectMonth || '--'}}月{{selectDay || '--'}}日打卡信息</view>

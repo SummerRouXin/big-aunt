@@ -17,7 +17,35 @@ const conf = {
     hasSetted: false,   //是否设置过   点击提交按钮和跳过都为true   作用是判断展示my_info   还是setting  /storage
   },
   onLoad: async function() {
+    this.initApp();
+  },
+  initApp: async function() {
+    let settingStatus = false;
+    try {
+      settingStatus = await apis.getSettingStatus('hasSetted');
+    } catch(e) {
+      console.log('getSettingStatus', e);
+    }
+    this.setData({
+      hasSetted: settingStatus
+    })
+    if(!!settingStatus) {   //如果设置过，则展示用户信息
+      let settingInfo = {};
+      try {
+        settingInfo = await apis.getSettingInfo('setting_info');
+      } catch(e) {
+        console.log('getSettingInfo', e)
+      }
+      this.setData({
+        genderIndex: settingInfo.genderIndex || null,
+        durationIndex: settingInfo.durationIndex || null,
+        intervalIndex: settingInfo.intervalIndex || null,
+        recentDate: settingInfo.recentDate || null,
+      })
+      this.hasFinished();
+    } else {    // 没设置过，则展示设置页面  啥都不用做
 
+    }
   },
   bindPickerGenderChange: function(e) {   //TODO: this
     console.log('picker gender ', e.detail.value)
@@ -49,19 +77,27 @@ const conf = {
     this.hasFinished();
   },
   bindSubmitTap: async function(e) {
-    const { genderIndex, durationIndex, intervalIndex, recentDate }  = this.data;
-    try {
-      await apis.submitSettingInfo('setting_info', {genderIndex, durationIndex, intervalIndex, recentDate})
-      await apis.submitSettingStatus('hasSetted', true)
-    } catch(e) {
-      console.log('bindSubmitTap storage', e)
+    const { hasFinishedSubmit, genderIndex, durationIndex, intervalIndex, recentDate }  = this.data;
+    if(hasFinishedSubmit) {
+      try {
+        await apis.submitSettingInfo('setting_info', {genderIndex, durationIndex, intervalIndex, recentDate})
+        await apis.submitSettingStatus('hasSetted', true)
+      } catch(e) {
+        console.log('bindSubmitTap storage', e)
+      }
+      this.setData({
+        hasSetted: true,
+      })
+      wx.switchTab({
+        url: '../calendar/index'
+      })
+    } else {
+      wx.showToast({
+        title: '信息要填完整才能计算准确哦',
+        icon: 'none',
+        duration: 2000,
+      })
     }
-    this.setData({
-      hasSetted: true,
-    })
-    wx.switchTab({
-      url: '../calendar/index'
-    })
   },
   bindSkipTap: async function(e) {
     this.setData({
@@ -94,4 +130,4 @@ const conf = {
 }
 
 
-module.exports = conf
+module.exports = conf;

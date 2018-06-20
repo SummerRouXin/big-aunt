@@ -1,4 +1,4 @@
-<import src="setting.wxml" />
+<import src="../common_setting/index.wxml" />
 <import src="my_info.wxml" />
 <view>
   <template wx:if="{{hasSetted == false}}"

@@ -1,18 +1,20 @@
 import util from '../../utils/util.js';
 import apis from '../../utils/apis.js';
 import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
-var common  = require('../common/index.js')
-console.log('----', common)
-Page({
-  data: common.data,
-  onLoad: async function () {
-    let settingInfo = {};
-    try {
-      settingInfo = await apis.getSettingInfo('setting_info');
-    } catch(e) {
-      console.log('getSettingInfo', e)
-    }
-    const { genderIndex, durationIndex, intervalIndex, recentDate } = settingInfo || {};
+var common  = require('../common_setting/index.js')
 
+Page({
+  data: {
+    ...common.data,
   },
+  onLoad: async function () {
+    common.initApp.call(this)
+  },
+  bindPickerGenderChange: common.bindPickerGenderChange,
+  bindPickerDurationChange: common.bindPickerDurationChange,
+  bindPickerIntervalChange: common.bindPickerIntervalChange,
+  bindPickerRecentChange: common.bindPickerRecentChange,
+  bindSubmitTap: common.bindSubmitTap,
+  bindSkipTap: common.bindSkipTap,
+  hasFinished: common.hasFinished,
 })

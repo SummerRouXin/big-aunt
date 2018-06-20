@@ -6,7 +6,7 @@
     <view class="goto_setting" bindtap="bindGoToSetting">去设置</view>
   </view>
   <view class="setting">
-    <view class="duration">月经持续天数：{{durationRange[settingInfo.durationIndex]}}</view>
-    <view class="interval">平均月经周期：{{intervalRange[settingInfo.intervalIndex]}}</view>
+    <view class="duration">月经持续天数：{{durationRange[durationIndex]}}天</view>
+    <view class="interval">平均月经周期：{{intervalRange[intervalIndex]}}天</view>
   </view>
 </template>

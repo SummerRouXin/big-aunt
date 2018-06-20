@@ -52,11 +52,18 @@
   float: left;
 }
 
+.clear {
+  clear: both;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+}
+
 .day_td_view {
   display: inline-block;
   width: 14.2%;
-  height: 120rpx;
-  line-height: 120rpx;
+  height: 90rpx;
+  line-height: 90rpx;
   text-align: center;
   color: #1c1c1c;
   font-size: 30rpx;
@@ -66,10 +73,44 @@
   color: #b5b5b5;
 }
 
+.mark {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  font-size: 30rpx;
+  margin-top: 30rpx;
+}
+.mark_icon {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin: 0 10rpx 0 20rpx;
+}
+.card_icon {
+  background-color: #fc5f9b;
+  width: 40rpx;
+  height: 40rpx;
+}
+.aunt_icon {
+  background-color: #fcf007;
+  width: 40rpx;
+  height: 40rpx;
+}
+.ovulate_icon {
+  background-color: #e84df9;
+}
+.safe_icon {
+  background-color: #09f945;
+}
+.mark_text {
+  margin-right: 30rpx;
+}
+
 .clock_title {
   font-size: 30rpx;
   color: #b1b1b1;
-  margin: 0 20rpx 10rpx 20rpx;
+  margin: 60rpx 20rpx 10rpx 20rpx;
 }
 
 .clock_icon {
@@ -77,7 +118,7 @@
   width: 40rpx;
   height: 40rpx;
   right: 0;
-  top: 10rpx;
+  top: 0;
   background-color: #fc5f9b;
   border: solid #fc5f9b 1rpx;
   border-radius: 50%;
