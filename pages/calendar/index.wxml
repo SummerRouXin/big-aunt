@@ -11,15 +11,18 @@
         <tr class="header_tr">
           <th class="header_th" wx:for="{{weekArr}}" wx:for-item="weekItem" wx:key="header_th">{{weekItem}}</th>
         </tr>
-        <view class="day_tr_view ">
+        <view class="day_tr_view">
           <view wx:if="{{grayLastArr.length > 0}}" class="day_td_view day_td_view_gray"
             wx:for="{{grayLastArr}}" wx:for-item="grayLastItem" wx:key="day_td_view">
             {{grayLastItem}}
           </view>
-          <view class="day_td_view" bindtap="bindDayTap" data-content="{{dayItem}}"
+          <view class="{{auntArr[dayItem-1] ? 'day_td_view aunt_mark' : 'day_td_view'}}"
+            bindtap="bindDayTap" data-content="{{dayItem}}"
             wx:for="{{dayArr}}" wx:for-item="dayItem" wx:key="day_td_view">
             {{dayItem}}
             <view wx:if="{{switchedArr[dayItem-1]}}" class="clock_icon"></view>
+            <view wx:if="{{ovulateArr[dayItem-1]}}" class="ovulate_mark"></view>
+            <view wx:if="{{safeArr[dayItem-1]}}" class="safe_mark"></view>
           </view>
           <view wx:if="{{grayNextArr.length > 0}}" class="day_td_view day_td_view_gray"
             wx:for="{{grayNextArr}}" wx:for-item="grayNextItem" wx:key="day_td_view">

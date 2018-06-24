@@ -40,7 +40,6 @@
 
 .header_th {
   color: #8c8c8c;
-  /* background-color: #fad052; */
   font-size: 30rpx;
   padding: 10rpx;
   flex-grow: 1;
@@ -50,6 +49,9 @@
 .day_tr_view {
   width: 100%;
   float: left;
+}
+.aunt_mark {
+  background-color: #fcf007;
 }
 
 .clear {
@@ -82,8 +84,8 @@
   margin-top: 30rpx;
 }
 .mark_icon {
-  width: 16rpx;
-  height: 16rpx;
+  width: 10rpx;
+  height: 10rpx;
   border-radius: 50%;
   margin: 0 10rpx 0 20rpx;
 }
@@ -124,6 +126,24 @@
   border-radius: 50%;
   font-size: 20rpx;
 }
+.ovulate_mark {
+  position: absolute;
+  width:10rpx;
+  height:10rpx;
+  border-radius:50%;
+  background-color: #e84df9;
+  left: 46%;
+  bottom: 15rpx;
+}
+.safe_mark {
+  position: absolute;
+  width:10rpx;
+  height:10rpx;
+  border-radius:50%;
+  background-color: #09f945;
+  left: 46%;
+  bottom: 5rpx;
+}
 
 .checkbox {
   position: absolute;
@@ -145,10 +165,6 @@
   justify-content: center;
   align-items:center;
   margin-top: 30rpx;
-}
-
-.tips_text {
-
 }
 
 .text_area {

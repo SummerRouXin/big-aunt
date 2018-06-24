@@ -12,7 +12,8 @@ Page({
   },
   onLoad: async function() {
     this.getUserInfo();
-    common.initApp.call(this)
+    await common.initApp.call(this)
+    this.hasFinished();
   },
   bindPickerGenderChange: common.bindPickerGenderChange,
   bindPickerDurationChange: common.bindPickerDurationChange,

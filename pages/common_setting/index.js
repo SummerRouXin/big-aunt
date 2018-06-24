@@ -7,9 +7,9 @@ const conf = {
     genderRange: ['女', '男'],
     genderIndex: null,
     sexChoose: true,   //男 false 女 true
-    durationRange: util.getNumberArr(1, 14),
+    durationRange: util.getNumberArr(1, 14),   //持续时间
     durationIndex: null,
-    intervalRange: util.getNumberArr(15, 100),
+    intervalRange: util.getNumberArr(19, 100),    //间隔时间
     intervalIndex: null,
     recentDate: '',
     startDate: util.getYearFirstDay(),
@@ -17,7 +17,7 @@ const conf = {
     hasSetted: false,   //是否设置过   点击提交按钮和跳过都为true   作用是判断展示my_info   还是setting  /storage
   },
   onLoad: async function() {
-    this.initApp();
+    await this.initApp();
   },
   initApp: async function() {
     let settingStatus = false;
@@ -42,7 +42,7 @@ const conf = {
         intervalIndex: settingInfo.intervalIndex || null,
         recentDate: settingInfo.recentDate || null,
       })
-      this.hasFinished();
+      // this.hasFinished();
     } else {    // 没设置过，则展示设置页面  啥都不用做
 
     }

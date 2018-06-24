@@ -44,6 +44,16 @@ const getMonthFirst = (month = getCurrentYearMonth().month, year = getCurrentYea
   return date;
 }
 
+const getMonthLast = (month = getCurrentYearMonth().month, year = getCurrentYearMonth().year) => {    //month字段取值为1～12
+  const date = new Date(year, month-1, '01');
+  if(month && month >= 1 && month <= 12) {     //如果month字段存在则获取指定月份的第一天
+    date.setMonth(month,0);
+  } else {       //如果month字段不存在则取当月的第一天
+    date.setDate(1);
+  }
+  return date;
+}
+
 const jsonStringify = (inputObj) => {
   if(typeof inputObj === 'object') {
     let inputStringify = JSON.stringify(inputObj);
@@ -62,6 +72,13 @@ const jsonParse = (value) => {
   return outputObj;
 }
 
+const getTwoDayInterval = (dayBefore, dayAfter) => {   //  TODO:  两天之间的间隔要不要+1
+  let dayBeforeDate = new Date(dayBefore),
+      dayAfterDate = new Date(dayAfter);
+  const result = Math.ceil(Math.abs(parseInt(dayAfterDate - dayBeforeDate) / 1000 / 60 / 60 / 24)) ;   //直接相减得到的是毫秒数
+  return result;
+}
+
 module.exports = {
   getCurrentYearMonth,
   getNumberArr,
@@ -69,6 +86,8 @@ module.exports = {
   getYearFirstDay,
   getMonthLength,
   getMonthFirst,
+  getMonthLast,
   jsonStringify,
-  jsonParse
+  jsonParse,
+  getTwoDayInterval,
 }

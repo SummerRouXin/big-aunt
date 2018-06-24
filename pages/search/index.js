@@ -8,7 +8,8 @@ Page({
     ...common.data,
   },
   onLoad: async function () {
-    common.initApp.call(this)
+    await common.initApp.call(this)
+    this.hasFinished();
   },
   bindPickerGenderChange: common.bindPickerGenderChange,
   bindPickerDurationChange: common.bindPickerDurationChange,

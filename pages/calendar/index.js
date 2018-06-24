@@ -2,10 +2,12 @@ import util from '../../utils/util.js';
 import apis from '../../utils/apis.js';
 import calendar_func from '../../utils/calendar_func.js';
 import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
-const weekConst = require('../../utils/const.js').weekConst;
+var common  = require('../common_setting/index.js')
+import { weekConst, ovulateInterval } from '../../utils/const.js';
 
 Page({
   data: {
+    ...common.data,
     selectMonth: util.getCurrentYearMonth().month, //选中的月份
     selectYear: util.getCurrentYearMonth().year,   //选中的年份
     selectDay: null,    //选中的天
@@ -13,12 +15,18 @@ Page({
     hasSwitched: false,   //感觉唯一的作用就是写年-月-日这个storage(submitTips)时更方便一些
     tipsContent: null,
     switchedArr: new Array(util.getMonthLength()),     //记录当前月份打卡情况，因为一进来就要展示，所以需要维护一个数组来记录
+    auntArr: new Array(util.getMonthLength()),       //存储大姨妈日期的数组
+    safeArr: new Array(util.getMonthLength()),       //安全期
+    ovulateArr: new Array(util.getMonthLength()),    //排卵期
+    // isBeforeRecentDate: true,    //该月是不是在最近一次月经之前，如果是则排卵期，安全期以及计算的月经期不显示
   },
   onLoad: async function() {
     this.calculateValue();
+    await common.initApp.call(this);
+    this.calculateAunt();
   },
   bindMonthTap: async function(e) {    //点击左右箭头
-    const { selectMonth, selectYear } = this.data,
+    const { selectMonth, selectYear, recentDate } = this.data,
           arrow = e.currentTarget.dataset.arrow;
     if(arrow == 'left') {   //left arrow
       console.log('left: ', selectMonth)
@@ -46,6 +54,15 @@ Page({
       }
     }
     this.calculateValue();
+    await common.initApp.call(this);
+    this.clearArr();
+    //比较日期大小 true表示选择的年月在来月经之前
+    const dateResult = new Date(recentDate) - new Date(`${selectYear}-${selectMonth}`) > 0 ? true : false;
+    if(dateResult) {
+      //不用计算月经时间
+    } else {
+      this.calculateAunt();
+    }
   },
   calculateValue: async function() {  //专门设置各种变量的函数
     const { selectMonth, selectYear, switchedArr } = this.data;
@@ -87,15 +104,12 @@ Page({
     console.log('switchChange: ', e.detail.value)
     const selectDay = parseInt(this.data.selectDay),
           { selectMonth, selectYear, switchedArr } = this.data;
-    // const newArr = new Array(util.getMonthLength(selectMonth, selectYear));
     const newArr = switchedArr.slice();
-    newArr[selectDay - 1] = true;    //数组从0开始，日期从1开始，注意-1
+    newArr[selectDay - 1] = e.detail.value;    //数组从0开始，日期从1开始，注意-1
     this.setData({
       hasSwitched: e.detail.value,
       switchedArr: newArr
     })
-    // console.log('newArr: ', newArr)
-    // console.log('switchedArr: ', this.data.switchedArr)
 
     try {
       const currMonth = `${selectYear}-${selectMonth}`
@@ -118,12 +132,128 @@ Page({
     } catch(e) {
       console.log('bindTextAreaBlur storage', e)
     }
+  },
+
+
+  calculateAunt: function() {
+    const { recentDate, intervalRange, intervalIndex, durationRange, durationIndex,
+      selectMonth, selectYear, auntArr, ovulateArr, safeArr } = this.data;
+    const newSelectMonth = parseInt(selectMonth) < 10 ? '0'+selectMonth : selectMonth;
+    const monthFirst = util.getMonthFirst(selectMonth, selectYear),
+          monthLast = util.getMonthLast(selectMonth, selectYear),
+          recentDateNew = new Date(recentDate),
+          monthLength = util.getMonthLength(selectMonth, selectYear);
+    const tempAuntArr = auntArr.slice(),
+          tempOvulateArr = ovulateArr.slice(),
+          tempSafeArr = safeArr.slice();
+    console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
+    console.log('间隔时间: ', intervalRange[intervalIndex])
+    console.log('最近一次： ', recentDate)
+    for(let i = 1; i <= monthLength; i++ ){
+      const day = i < 10 ? '0'+i : i;
+      const currentDay = `${selectYear}-${newSelectMonth}-${day}`;
+      const twoDayInterval = util.getTwoDayInterval(recentDate, currentDay);
+      const intervalLength = intervalRange[intervalIndex];
+      // const ovulateDay = (1-14)+intervalLength;   //月经来前的第14天 即排卵日
+
+      let result = twoDayInterval % intervalLength;
+      // console.log('aunt: ----i: ', i, '---result: ', result, '-----twoDayInterval: ', twoDayInterval)
+
+      // result === 0 ? result = intervalLength : result = result  //最后一天%之后会是0   处理一下
+      if(result >= 0 && result < parseInt(durationRange[durationIndex])){   //  标记大姨妈数组
+        // console.log('aunt: ----i: ', i, '---result: ', result, '-----twoDayInterval: ', twoDayInterval)
+        if(selectMonth == new Date(recentDate).getMonth() + 1) {
+          if(i - new Date(recentDate).getDate() < 0 && i - new Date(recentDate).getDate() > -intervalLength) {
+            tempSafeArr[i-1] = true;
+            this.setData({
+              safeArr: tempSafeArr
+            })
+          } else {
+            tempAuntArr[i-1] = true;
+            this.setData({
+              auntArr: tempAuntArr
+            })
+          }
+        } else {
+          tempAuntArr[i-1] = true;
+          this.setData({
+            auntArr: tempAuntArr
+          })
+        }
+      } else if(result <= 14 + 4 && result >= 14 - 5 ) {
+        // console.log('ovulate: ----i: ', i, '---result: ', result)
+        tempOvulateArr[i-1] = true;
+        this.setData({
+          ovulateArr: tempOvulateArr
+        })
+      } else {
+        // console.log('safe: ----i: ', i, '---result: ', result)
+        tempSafeArr[i-1] = true;
+        this.setData({
+          safeArr: tempSafeArr
+        })
+      }
+    }
+    console.log('auntArr: ', this.data.auntArr)
+  },
+
+  // calculateAunt: function() {
+  //   const { recentDate, intervalRange, intervalIndex, durationRange, durationIndex,
+  //     selectMonth, selectYear, auntArr, ovulateArr, safeArr } = this.data;
+  //   const newSelectMonth = parseInt(selectMonth) < 10 ? '0'+selectMonth : selectMonth;
+  //   const monthFirst = util.getMonthFirst(selectMonth, selectYear),
+  //         monthLast = util.getMonthLast(selectMonth, selectYear),
+  //         recentDateNew = new Date(recentDate),
+  //         monthLength = util.getMonthLength(selectMonth, selectYear);
+  //   const tempAuntArr = auntArr.slice(),
+  //         tempOvulateArr = ovulateArr.slice(),
+  //         tempSafeArr = safeArr.slice();
+  //   console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
+  //   console.log('间隔时间: ', intervalRange[intervalIndex])
+  //   console.log('最近一次： ', recentDate)
+  //   console.log('monthLength:' ,monthLength)
+  //
+  //   let i = 1;
+  //   let auntStartDayArr = [];
+  //   while(i <= monthLength) {
+  //     const day = i < 10 ? '0'+i : i;
+  //     const currentDay = `${selectYear}-${newSelectMonth}-${day}`;
+  //     const twoDayInterval = util.getTwoDayInterval(recentDate, currentDay);
+  //     const intervalLength = intervalRange[intervalIndex];
+  //     const result = twoDayInterval % intervalLength;
+  //     if(result == 0) {
+  //       auntStartDayArr.push(i);
+  //       for(let j = i;j < i + durationRange[durationIndex] && j <= monthLength ; j++) {
+  //         tempAuntArr[j-1] = true;
+  //       }
+  //       i = i + durationRange[durationIndex];
+  //       this.setData({
+  //         auntArr: tempAuntArr
+  //       })
+  //     } else {
+  //       i++;
+  //     }
+  //   }
+  //   console.log('auntStartDayArr: ', auntStartDayArr)
+  //   auntStartDayArr = auntStartDayArr.filter(item => item - 10 >= 0)
+  //   console.log('auntStartDayArr: ', auntStartDayArr)
+  //   auntStartDayArr.forEach((item) => {
+  //     let k = 0;
+  //     for(let j = item - 10, k = 0; j >= 0, k < 10; j--, k++) {
+  //       console.log('ovalate: ', j)
+  //       tempOvulateArr[j-1] = true;
+  //       this.setData({
+  //         ovulateArr: tempOvulateArr
+  //       })
+  //     }
+  //   })
+  // },
+
+  clearArr: function() {
+    this.setData({
+      auntArr: new Array(util.getMonthLength()),       //存储大姨妈日期的数组
+      safeArr: new Array(util.getMonthLength()),       //安全期
+      ovulateArr: new Array(util.getMonthLength()),    //排卵期
+    })
   }
 })
-// BB: async function() {
-//   await new Promise((resolve) => {
-//       setTimeout(resolve, 500)
-//       console.log(2)
-//     })
-//   console.log(1)
-// },
