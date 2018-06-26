@@ -79,6 +79,14 @@ const getTwoDayInterval = (dayBefore, dayAfter) => {   //  TODO:  两天之间�
   return result;
 }
 
+const newArray = (length) => {
+  const arr = new Array();
+  for(let i = 0; i < length; i++) {
+    arr.push(false);
+  }
+  return arr;
+}
+
 module.exports = {
   getCurrentYearMonth,
   getNumberArr,
@@ -90,4 +98,5 @@ module.exports = {
   jsonStringify,
   jsonParse,
   getTwoDayInterval,
+  newArray,
 }

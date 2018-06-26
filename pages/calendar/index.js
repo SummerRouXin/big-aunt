@@ -14,10 +14,10 @@ Page({
     hasClick: false,
     hasSwitched: false,   //感觉唯一的作用就是写年-月-日这个storage(submitTips)时更方便一些
     tipsContent: null,
-    switchedArr: new Array(util.getMonthLength()),     //记录当前月份打卡情况，因为一进来就要展示，所以需要维护一个数组来记录
-    auntArr: new Array(util.getMonthLength()),       //存储大姨妈日期的数组
-    safeArr: new Array(util.getMonthLength()),       //安全期
-    ovulateArr: new Array(util.getMonthLength()),    //排卵期
+    switchedArr: util.newArray(util.getMonthLength()),     //记录当前月份打卡情况，因为一进来就要展示，所以需要维护一个数组来记录
+    auntArr: util.newArray(util.getMonthLength()),       //存储大姨妈日期的数组
+    safeArr: util.newArray(util.getMonthLength()),       //安全期
+    ovulateArr: util.newArray(util.getMonthLength()),    //排卵期
     // isBeforeRecentDate: true,    //该月是不是在最近一次月经之前，如果是则排卵期，安全期以及计算的月经期不显示
     firstAuntArr: [],     //每个月大姨妈来的第一天保留在数组中，这是为了计算排卵期
   },
@@ -70,10 +70,10 @@ Page({
     await common.initApp.call(this);
     this.clearArr();
     //比较日期大小 true表示选择的年月在来月经之前    月底
-    const newMonth = this.data.selectMonth,
+    const newMonth = this.data.selectMonth >= 10 ? this.data.selectMonth : "0"+this.data.selectMonth, //notice: 不加0在手机中会报错
           newYear = this.data.selectYear;
     const lastDate = util.getMonthLength(newMonth, newYear);
-    const dateResult = new Date(`${newYear}-${newMonth}-${lastDate}`) - new Date(recentDate) >= 0 ? true : false;
+    const dateResult = (new Date(`${newYear}-${newMonth}-${lastDate}`) - new Date(recentDate)) >= 0 ? true : false;
     if(dateResult) {
       this.calculateAunt();
     } else {
@@ -209,15 +209,12 @@ Page({
     this.setData({
       ovulateArr: tempOvulateArr
     })
-    // console.log('ovulateArr: ', this.data.ovulateArr)
-    // console.log('auntArr: ', this.data.auntArr)
     for(let j = 0; j < this.data.ovulateArr.length; j++) {
       tempSafeArr[j] = !(this.data.auntArr[j] || this.data.ovulateArr[j])
     }
     this.setData({
       safeArr: tempSafeArr
     })
-    // console.log('resultArr---', this.data.safeArr)
   },
 
   // calculateAunt: function() {
@@ -274,9 +271,9 @@ Page({
 
   clearArr: function() {
     this.setData({
-      auntArr: new Array(util.getMonthLength()),       //存储大姨妈日期的数组
-      safeArr: new Array(util.getMonthLength()),       //安全期
-      ovulateArr: new Array(util.getMonthLength()),    //排卵期
+      auntArr: util.newArray(util.getMonthLength()),       //存储大姨妈日期的数组
+      safeArr: util.newArray(util.getMonthLength()),       //安全期
+      ovulateArr: util.newArray(util.getMonthLength()),    //排卵期
       firstAuntArr: []
     })
   }
