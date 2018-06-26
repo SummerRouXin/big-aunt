@@ -11,6 +11,10 @@ Page({
     await common.initApp.call(this)
     this.hasFinished();
   },
+  onShow: async function () {
+    await common.initApp.call(this)
+    this.hasFinished();
+  },
   bindPickerGenderChange: common.bindPickerGenderChange,
   bindPickerDurationChange: common.bindPickerDurationChange,
   bindPickerIntervalChange: common.bindPickerIntervalChange,

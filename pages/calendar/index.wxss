@@ -1,3 +1,5 @@
+@import "../common_setting/index.wxss";
+
 .cal_header {
   display: flex;
   flex-direction: row;
@@ -6,7 +8,7 @@
   padding: 40rpx 0;
 }
 
-.left_arrow {
+.left_arrow_cal {
   width: 120rpx;
   height: 50rpx;
   text-align: center;
@@ -17,7 +19,7 @@
   text-align: center;
 }
 
-.right_arrow {
+.right_arrow_cal {
   width: 120rpx;
   height: 50rpx;
   text-align: center;

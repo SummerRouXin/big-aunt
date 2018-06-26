@@ -15,6 +15,11 @@ Page({
     await common.initApp.call(this)
     this.hasFinished();
   },
+  onShow: async function() {
+    this.getUserInfo();
+    await common.initApp.call(this)
+    this.hasFinished();
+  },
   bindPickerGenderChange: common.bindPickerGenderChange,
   bindPickerDurationChange: common.bindPickerDurationChange,
   bindPickerIntervalChange: common.bindPickerIntervalChange,
@@ -54,5 +59,11 @@ Page({
     this.setData({
       hasSetted: false
     })
+  },
+  bindMarkAuntMonthly: function(e) {
+
+  },
+  bindClearStorage: function(e) {
+    wx.clearStorage()
   }
 })

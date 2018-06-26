@@ -1,1 +1,26 @@
 @import "../common_setting/index.wxss";
+
+.mark_aunt {
+  display:flex;
+  font-size: 40rpx;
+  margin-left: 20rpx;
+  margin-top: 30rpx;
+}
+.goto_mark {
+  margin-left: 50rpx;
+  font-size: 30rpx;
+  color: #fc5f9b;
+  border: solid 1rpx #fc5f9b;
+  border-radius: 10rpx;
+  padding: 5rpx;
+}
+
+.clear_storage {
+  display: inline-block;
+  margin: 100rpx 0 30rpx 200rpx;
+  padding: 10rpx;
+  font-size: 40rpx;
+  color: #fc5f9b;
+  border: solid 1rpx #fc5f9b;
+  border-radius: 20rpx;
+}

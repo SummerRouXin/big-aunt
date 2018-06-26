@@ -19,8 +19,21 @@ Page({
     safeArr: new Array(util.getMonthLength()),       //安全期
     ovulateArr: new Array(util.getMonthLength()),    //排卵期
     // isBeforeRecentDate: true,    //该月是不是在最近一次月经之前，如果是则排卵期，安全期以及计算的月经期不显示
+    firstAuntArr: [],     //每个月大姨妈来的第一天保留在数组中，这是为了计算排卵期
   },
+  bindPickerGenderChange: common.bindPickerGenderChange,
+  bindPickerDurationChange: common.bindPickerDurationChange,
+  bindPickerIntervalChange: common.bindPickerIntervalChange,
+  bindPickerRecentChange: common.bindPickerRecentChange,
+  bindSubmitTap: common.bindSubmitTap,
+  bindSkipTap: common.bindSkipTap,
+  hasFinished: common.hasFinished,
   onLoad: async function() {
+    this.calculateValue();
+    await common.initApp.call(this);
+    this.calculateAunt();
+  },
+  onShow: async function() {
     this.calculateValue();
     await common.initApp.call(this);
     this.calculateAunt();
@@ -56,12 +69,15 @@ Page({
     this.calculateValue();
     await common.initApp.call(this);
     this.clearArr();
-    //比较日期大小 true表示选择的年月在来月经之前
-    const dateResult = new Date(recentDate) - new Date(`${selectYear}-${selectMonth}`) > 0 ? true : false;
+    //比较日期大小 true表示选择的年月在来月经之前    月底
+    const newMonth = this.data.selectMonth,
+          newYear = this.data.selectYear;
+    const lastDate = util.getMonthLength(newMonth, newYear);
+    const dateResult = new Date(`${newYear}-${newMonth}-${lastDate}`) - new Date(recentDate) >= 0 ? true : false;
     if(dateResult) {
-      //不用计算月经时间
-    } else {
       this.calculateAunt();
+    } else {
+      //不用计算月经时间
     }
   },
   calculateValue: async function() {  //专门设置各种变量的函数
@@ -149,19 +165,16 @@ Page({
     console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
     console.log('间隔时间: ', intervalRange[intervalIndex])
     console.log('最近一次： ', recentDate)
+    const intervalLength = intervalRange[intervalIndex];
+    //for
     for(let i = 1; i <= monthLength; i++ ){
       const day = i < 10 ? '0'+i : i;
       const currentDay = `${selectYear}-${newSelectMonth}-${day}`;
       const twoDayInterval = util.getTwoDayInterval(recentDate, currentDay);
-      const intervalLength = intervalRange[intervalIndex];
-      // const ovulateDay = (1-14)+intervalLength;   //月经来前的第14天 即排卵日
 
       let result = twoDayInterval % intervalLength;
-      // console.log('aunt: ----i: ', i, '---result: ', result, '-----twoDayInterval: ', twoDayInterval)
 
-      // result === 0 ? result = intervalLength : result = result  //最后一天%之后会是0   处理一下
       if(result >= 0 && result < parseInt(durationRange[durationIndex])){   //  标记大姨妈数组
-        // console.log('aunt: ----i: ', i, '---result: ', result, '-----twoDayInterval: ', twoDayInterval)
         if(selectMonth == new Date(recentDate).getMonth() + 1) {
           if(i - new Date(recentDate).getDate() < 0 && i - new Date(recentDate).getDate() > -intervalLength) {
             tempSafeArr[i-1] = true;
@@ -180,21 +193,31 @@ Page({
             auntArr: tempAuntArr
           })
         }
-      } else if(result <= 14 + 4 && result >= 14 - 5 ) {
-        // console.log('ovulate: ----i: ', i, '---result: ', result)
-        tempOvulateArr[i-1] = true;
-        this.setData({
-          ovulateArr: tempOvulateArr
-        })
-      } else {
-        // console.log('safe: ----i: ', i, '---result: ', result)
-        tempSafeArr[i-1] = true;
-        this.setData({
-          safeArr: tempSafeArr
-        })
+      }
+      if(result == 0) {
+        this.data.firstAuntArr.push(i)
       }
     }
-    console.log('auntArr: ', this.data.auntArr)
+    //for
+    this.data.firstAuntArr.forEach((firstAuntItem) => {
+      for(let i = 1; i <= monthLength; i++) {
+        if(firstAuntItem - i >= 10 || i - firstAuntItem >= intervalLength - 19) {
+          tempOvulateArr[i-1] = true;
+        }
+      }
+    })
+    this.setData({
+      ovulateArr: tempOvulateArr
+    })
+    // console.log('ovulateArr: ', this.data.ovulateArr)
+    // console.log('auntArr: ', this.data.auntArr)
+    for(let j = 0; j < this.data.ovulateArr.length; j++) {
+      tempSafeArr[j] = !(this.data.auntArr[j] || this.data.ovulateArr[j])
+    }
+    this.setData({
+      safeArr: tempSafeArr
+    })
+    // console.log('resultArr---', this.data.safeArr)
   },
 
   // calculateAunt: function() {
@@ -254,6 +277,7 @@ Page({
       auntArr: new Array(util.getMonthLength()),       //存储大姨妈日期的数组
       safeArr: new Array(util.getMonthLength()),       //安全期
       ovulateArr: new Array(util.getMonthLength()),    //排卵期
+      firstAuntArr: []
     })
   }
 })

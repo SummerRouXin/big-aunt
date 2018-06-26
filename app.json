@@ -5,6 +5,7 @@
     "pages/search/index",
     "pages/user_info/index"
 
+
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -23,8 +24,8 @@
       "pagePath": "pages/user_info/index",
       "text": "设置"
     }],
-    "backgroundColor": "#c6c4c4",
-    "color": "white",
+    "backgroundColor": "#f6f8f9",
+    "color": "#f9b8cf",
     "borderStyle": "white",
     "selectedColor": "#fc5f9b"
   }
