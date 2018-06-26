@@ -1,6 +1,5 @@
 import util from '../../utils/util.js';
 import apis from '../../utils/apis.js';
-import calendar_func from '../../utils/calendar_func.js';
 import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 var common  = require('../common_setting/index.js')
 import { weekConst, ovulateInterval } from '../../utils/const.js';
@@ -83,10 +82,10 @@ Page({
   calculateValue: async function() {  //专门设置各种变量的函数
     const { selectMonth, selectYear, switchedArr } = this.data;
     const weekArr = weekConst,
-          monthLines = calendar_func.getMonthLines(selectMonth, selectYear),
-          dayArr = calendar_func.getCalendarDayArr(selectMonth, selectYear).dayArr,
-          grayLastArr = calendar_func.getCalendarDayArr(selectMonth, selectYear).grayLastArr,
-          grayNextArr = calendar_func.getCalendarDayArr(selectMonth, selectYear).grayNextArr;
+          monthLines = util.getMonthLines(selectMonth, selectYear),
+          dayArr = util.getCalendarDayArr(selectMonth, selectYear).dayArr,
+          grayLastArr = util.getCalendarDayArr(selectMonth, selectYear).grayLastArr,
+          grayNextArr = util.getCalendarDayArr(selectMonth, selectYear).grayNextArr;
     try {
       const initData = await apis.getCalendarInitData(`${this.data.selectYear}-${this.data.selectMonth}`)
       this.setData({
@@ -274,7 +273,8 @@ Page({
       auntArr: util.newArray(util.getMonthLength()),       //存储大姨妈日期的数组
       safeArr: util.newArray(util.getMonthLength()),       //安全期
       ovulateArr: util.newArray(util.getMonthLength()),    //排卵期
-      firstAuntArr: []
+      firstAuntArr: [],
+      hasClick: false,
     })
   }
 })

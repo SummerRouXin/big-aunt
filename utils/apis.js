@@ -58,7 +58,6 @@ module.exports = {
       key: key,
       data: value,
       success: () => {
-        console.log('+++++', key, value)
         console.log('sendSwitchStatus success')
       },
       fail: (e) => {

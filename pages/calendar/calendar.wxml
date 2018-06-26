@@ -47,7 +47,6 @@
         <switch checked="{{switchedArr[selectDay-1]}}" bindchange="switchChange"/>
       </view>
       <view class="tips">
-
         <view class="clock_text tips_text">备注</view>
         <textarea class="text_area" bindinput="bindTextAreaInput" bindblur="bindTextAreaBlur"
           auto-height placeholder="" value="{{tipsContent}}" />

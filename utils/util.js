@@ -8,6 +8,9 @@ const getCurrentYearMonth = () => {    //获取当前年份
   };
 }
 
+const currMonth = getCurrentYearMonth().month;
+const currYear = getCurrentYearMonth().year;
+
 const getNumberArr = (startNum, endNum) => {   //返回一个开始数字和结束数字组成的数组，用于选择周期时间范围
   const result = [];
   for(let i = startNum; i <= endNum; i++) {
@@ -30,11 +33,11 @@ const getYearFirstDay = () => {     //获取当年的第一天，用于初始化
   return `${year}-01-01`;
 }
 
-const getMonthLength = (month = getCurrentYearMonth().month, year = getCurrentYearMonth().year) => {    //获取某个月的天数
+const getMonthLength = (month = currMonth, year = currYear) => {    //获取某个月的天数
   return new Date(year, month, 0).getDate()   //month都不用－1
 }
 
-const getMonthFirst = (month = getCurrentYearMonth().month, year = getCurrentYearMonth().year) => {    //month字段取值为1～12
+const getMonthFirst = (month = currMonth, year = currYear) => {    //month字段取值为1～12
   const date = new Date(year, month-1, '01');
   if(month && month >= 1 && month <= 12) {     //如果month字段存在则获取指定月份的第一天
     date.setMonth(month - 1,1);
@@ -44,7 +47,7 @@ const getMonthFirst = (month = getCurrentYearMonth().month, year = getCurrentYea
   return date;
 }
 
-const getMonthLast = (month = getCurrentYearMonth().month, year = getCurrentYearMonth().year) => {    //month字段取值为1～12
+const getMonthLast = (month = currMonth, year = currYear) => {    //month字段取值为1～12
   const date = new Date(year, month-1, '01');
   if(month && month >= 1 && month <= 12) {     //如果month字段存在则获取指定月份的第一天
     date.setMonth(month,0);
@@ -87,6 +90,37 @@ const newArray = (length) => {
   return arr;
 }
 
+//计算每个月的日历有几行
+const getMonthLines = (month = currMonth, year = currYear) => {
+  return Math.ceil((getMonthFirst(month, year).getDay() + getMonthLength(month, year)) / 7);
+}
+
+//获取这个月的天数组
+const getCalendarDayArr = (month = currMonth, year = currYear) => {
+  const firstDay = getMonthFirst(month, year).getDay(),
+        monthLen = getMonthLength(month, year),
+        nextMonthLen = getMonthLines(month, year) * 7 - firstDay - monthLen;
+  const grayLastArr = [],
+        grayNextArr = [],
+        dayArr = [];
+  for(let i = 1; i <= firstDay; i++) {
+    const lastMonthLen = getMonthLength(month-1, year);
+    grayLastArr.push(lastMonthLen - firstDay + i);
+  }
+  for(let j = 1; j <= monthLen; j++) {
+    dayArr.push(j)
+  }
+  for(let k = 1; k <= nextMonthLen; k++) {
+    grayNextArr.push(k);
+  }
+
+  return {
+    grayLastArr,
+    grayNextArr,
+    dayArr
+  }
+}
+
 module.exports = {
   getCurrentYearMonth,
   getNumberArr,
@@ -99,4 +133,6 @@ module.exports = {
   jsonParse,
   getTwoDayInterval,
   newArray,
+  getMonthLines,
+  getCalendarDayArr,
 }
