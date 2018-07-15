@@ -1,5 +1,6 @@
 import util from '../../utils/util.js';
 import apis from '../../utils/apis.js';
+import { startDate } from '../../utils/const.js';
 import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 const conf = {
@@ -12,7 +13,8 @@ const conf = {
     intervalRange: util.getNumberArr(19, 100),    //间隔时间
     intervalIndex: null,
     recentDate: '',
-    startDate: util.getYearFirstDay(),
+    startDate: startDate,
+    endDate: util.getCurrentDay(),
     hasFinishedSubmit: false,  //是否点过提交按钮  作用是设置提交按钮颜色
     hasSetted: false,   //是否设置过   点击提交按钮和跳过都为true   作用是判断展示my_info   还是setting  /storage
   },
@@ -89,7 +91,7 @@ const conf = {
         hasSetted: true,
       })
       wx.switchTab({
-        url: '../calendar/index'
+        url: '../calendar_tab/index',
       })
     } else {
       wx.showToast({
@@ -109,7 +111,7 @@ const conf = {
       console.log('submitSettingStatus storage', e)
     }
     wx.switchTab({
-      url: '../calendar/index'
+      url: '../calendar_tab/index',
     })
   },
   hasFinished: function() {

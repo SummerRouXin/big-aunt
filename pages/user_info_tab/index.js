@@ -1,7 +1,6 @@
 import util from '../../utils/util.js';
 import apis from '../../utils/apis.js';
 import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
-var common  = require('../common_setting/index.js')
 
 Page({
   data: {

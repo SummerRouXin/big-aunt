@@ -103,14 +103,14 @@ Page({
     })
   },
   bindDayTap: async function(e) {     //点击日期
-    console.log('bindDayTap: ', e.target.dataset.content)
-    const eDay = e.target.dataset.content;
+    console.log('bindDayTap: ', e.target.dataset.selectday)
+    const eDay = e.target.dataset.selectday || e.currentTarget.dataset.selectday;
     const { selectMonth, selectYear, hasSwitched, tipsContent } = this.data;
     const currDay = `${selectYear}-${selectMonth}-${eDay}`
     const dayContent = await apis.getDayContent(currDay);
     this.setData({
       hasClick: true,
-      selectDay: e.target.dataset.content || null,
+      selectDay: eDay || null,
       hasSwitched: dayContent.hasSwitched || false,
       tipsContent: dayContent.tipsContent || null,
     })
@@ -148,8 +148,6 @@ Page({
       console.log('bindTextAreaBlur storage', e)
     }
   },
-
-
   calculateAunt: function() {
     const { recentDate, intervalRange, intervalIndex, durationRange, durationIndex,
       selectMonth, selectYear, auntArr, ovulateArr, safeArr } = this.data;
@@ -161,10 +159,12 @@ Page({
     const tempAuntArr = auntArr.slice(),
           tempOvulateArr = ovulateArr.slice(),
           tempSafeArr = safeArr.slice();
-    console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
-    console.log('间隔时间: ', intervalRange[intervalIndex])
-    console.log('最近一次： ', recentDate)
     const intervalLength = intervalRange[intervalIndex];
+
+    console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
+    console.log('间隔时间: ', intervalLength)
+    console.log('最近一次： ', recentDate)
+
     //for
     for(let i = 1; i <= monthLength; i++ ){
       const day = i < 10 ? '0'+i : i;
@@ -200,8 +200,11 @@ Page({
     //for
     this.data.firstAuntArr.forEach((firstAuntItem) => {
       for(let i = 1; i <= monthLength; i++) {
-        if(firstAuntItem - i >= 10 || i - firstAuntItem >= intervalLength - 19) {
+        if((firstAuntItem - i >= 10 && firstAuntItem - i <= 19) ||
+          (i - firstAuntItem >= intervalLength - 19 && i - firstAuntItem <= intervalLength - 10)) {
           tempOvulateArr[i-1] = true;
+        } else {
+          tempOvulateArr[i-1] = false;
         }
       }
     })
@@ -215,59 +218,6 @@ Page({
       safeArr: tempSafeArr
     })
   },
-
-  // calculateAunt: function() {
-  //   const { recentDate, intervalRange, intervalIndex, durationRange, durationIndex,
-  //     selectMonth, selectYear, auntArr, ovulateArr, safeArr } = this.data;
-  //   const newSelectMonth = parseInt(selectMonth) < 10 ? '0'+selectMonth : selectMonth;
-  //   const monthFirst = util.getMonthFirst(selectMonth, selectYear),
-  //         monthLast = util.getMonthLast(selectMonth, selectYear),
-  //         recentDateNew = new Date(recentDate),
-  //         monthLength = util.getMonthLength(selectMonth, selectYear);
-  //   const tempAuntArr = auntArr.slice(),
-  //         tempOvulateArr = ovulateArr.slice(),
-  //         tempSafeArr = safeArr.slice();
-  //   console.log('持续时间: ', durationRange[durationIndex] )  //5   2018-05-28
-  //   console.log('间隔时间: ', intervalRange[intervalIndex])
-  //   console.log('最近一次： ', recentDate)
-  //   console.log('monthLength:' ,monthLength)
-  //
-  //   let i = 1;
-  //   let auntStartDayArr = [];
-  //   while(i <= monthLength) {
-  //     const day = i < 10 ? '0'+i : i;
-  //     const currentDay = `${selectYear}-${newSelectMonth}-${day}`;
-  //     const twoDayInterval = util.getTwoDayInterval(recentDate, currentDay);
-  //     const intervalLength = intervalRange[intervalIndex];
-  //     const result = twoDayInterval % intervalLength;
-  //     if(result == 0) {
-  //       auntStartDayArr.push(i);
-  //       for(let j = i;j < i + durationRange[durationIndex] && j <= monthLength ; j++) {
-  //         tempAuntArr[j-1] = true;
-  //       }
-  //       i = i + durationRange[durationIndex];
-  //       this.setData({
-  //         auntArr: tempAuntArr
-  //       })
-  //     } else {
-  //       i++;
-  //     }
-  //   }
-  //   console.log('auntStartDayArr: ', auntStartDayArr)
-  //   auntStartDayArr = auntStartDayArr.filter(item => item - 10 >= 0)
-  //   console.log('auntStartDayArr: ', auntStartDayArr)
-  //   auntStartDayArr.forEach((item) => {
-  //     let k = 0;
-  //     for(let j = item - 10, k = 0; j >= 0, k < 10; j--, k++) {
-  //       console.log('ovalate: ', j)
-  //       tempOvulateArr[j-1] = true;
-  //       this.setData({
-  //         ovulateArr: tempOvulateArr
-  //       })
-  //     }
-  //   })
-  // },
-
   clearArr: function() {
     this.setData({
       auntArr: util.newArray(util.getMonthLength()),       //存储大姨妈日期的数组

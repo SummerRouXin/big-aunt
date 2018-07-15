@@ -1,0 +1,6 @@
+{
+	"navigationBarTitleText": "信息填写",
+	"usingComponents": {
+		"commonSetting": "../common_setting"
+	}
+}

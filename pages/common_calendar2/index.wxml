@@ -18,7 +18,7 @@
               {{grayLastItem}}
             </view>
             <view class="{{auntArr[dayItem-1] ? 'day_td_view aunt_mark' : 'day_td_view'}}"
-              bindtap="bindDayTap" data-content="{{dayItem}}"
+              bindtap="bindDayTap" data-selectday="{{dayItem}}"
               wx:for="{{dayArr}}" wx:for-item="dayItem" wx:key="day_td_view">
               {{dayItem}}
               <view wx:if="{{switchedArr[dayItem-1]}}" class="clock_icon"></view>

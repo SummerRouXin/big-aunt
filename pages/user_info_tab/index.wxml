@@ -1,0 +1,12 @@
+<import src="../common_setting/index.wxml" />
+<import src="my_info.wxml" />
+<view>
+  <template wx:if="{{hasSetted == false}}"
+    is="setting"
+    data="{{ genderRange, genderIndex, durationRange, durationIndex, intervalRange, intervalIndex, recentDate, startDate, hasFinishedSubmit, sexChoose }}"
+  />
+  <template wx:if="{{hasSetted == true || settingInfo.genderIndex}}"
+    is="my_info"
+    data="{{ canIUse, userInfo, durationRange, durationIndex, intervalRange, intervalIndex, settingInfo }}"
+  />
+</view>

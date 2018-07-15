@@ -21,10 +21,12 @@ const getNumberArr = (startNum, endNum) => {   //返回一个开始数字和结�
 
 const getCurrentDay = () => {    //获取今天的年月日
   const date = new Date();
-  const year = date.getYear()+1900;
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${year}-${month}-${day}`;
+  const year = date.getYear()+1900,
+        month = date.getMonth() + 1,
+        day = date.getDate();
+  const showMonth = month >= 10 ? month : '0' + month,
+        showDay = day >= 10 ? day : '0' + day;
+  return `${year}-${showMonth}-${showDay}`;
 }
 
 const getYearFirstDay = () => {     //获取当年的第一天，用于初始化

@@ -1,9 +1,8 @@
 {
   "pages":[
 
-    "pages/calendar/index",
-    "pages/search/index",
-    "pages/user_info/index"
+
+    "pages/user_info_tab/index"
 
 
   ],
@@ -15,13 +14,13 @@
   },
   "tabBar": {
     "list": [{
-      "pagePath": "pages/calendar/index",
+      "pagePath": "pages/user_info_tab/index",
       "text": "日历"
     }, {
-      "pagePath": "pages/search/index",
+      "pagePath": "pages/user_info_tab/index",
       "text": "查询"
     }, {
-      "pagePath": "pages/user_info/index",
+      "pagePath": "pages/user_info_tab/index",
       "text": "设置"
     }],
     "backgroundColor": "#f6f8f9",

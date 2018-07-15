@@ -1,5 +1,3 @@
-@import "../common_setting/index.wxss";
-
 .cal_header {
   display: flex;
   flex-direction: row;
