@@ -50,4 +50,5 @@
         auto-height placeholder="" value="{{tipsContent}}" />
     </view>
   </view>
+  <view wx:if="{{hasShowBackBtn}}" class="back_btn" bindtap="bindBackTap">返回设置</view>
 </view>

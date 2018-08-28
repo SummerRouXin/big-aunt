@@ -6,6 +6,17 @@
   padding: 40rpx 0;
 }
 
+.back_btn {
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: #bf71f7;
+  color: #fff;
+  margin: 50rpx auto 0 auto;
+  border-radius: 15rpx;
+  text-align: center;
+}
+
 .left_arrow_cal {
   width: 120rpx;
   height: 50rpx;

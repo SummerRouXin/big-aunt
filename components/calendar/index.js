@@ -12,7 +12,8 @@ Component({
     hasSetted: Boolean,
     durationRange: Array,
     intervalRange: Array,
-    whoseSetting: String // 是“我自己”或者“别人”的设置
+    whoseSetting: String, // 是“我自己”或者“别人”的设置
+    hasShowBackBtn: Boolean,
   },
   data: {
     selectMonth: util.getCurrentYearMonth().month, //选中的月份
@@ -30,7 +31,7 @@ Component({
     genderIndex: null,
     durationIndex: null,
     intervalIndex: null,
-    recentDate: ""
+    recentDate: "",
   },
   async attached() {
     this.getInitData();
@@ -257,15 +258,16 @@ Component({
       //for
       this.data.firstAuntArr.forEach(firstAuntItem => {
         for (let i = 1; i <= monthLength; i++) {
-          if (
-            (firstAuntItem - i >= 10 && firstAuntItem - i <= 19) ||
-            (i - firstAuntItem >= intervalLength - 19 &&
-              i - firstAuntItem <= intervalLength - 10)
-          ) {
-            tempOvulateArr[i - 1] = true;
-          } else {
-            tempOvulateArr[i - 1] = false;
-          }
+          if (((firstAuntItem - i >= 10 && firstAuntItem - i <= 19)
+              || (i - firstAuntItem >= intervalLength - 19 
+                && i - firstAuntItem <= intervalLength - 10
+             ))
+              && tempSafeArr[i] == false
+            ) {
+              tempOvulateArr[i - 1] = true;
+            } else {
+              tempOvulateArr[i - 1] = false;
+            }
         }
       });
       this.setData({
@@ -286,6 +288,12 @@ Component({
         firstAuntArr: [],
         hasClick: false
       });
+    },
+    bindBackTap: function() {
+      this.setData({
+        hasSetted: false,
+      });
+      this.triggerEvent('changesetted', { hasSetted: false });
     }
   }
 });

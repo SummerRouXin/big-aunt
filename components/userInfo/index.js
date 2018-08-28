@@ -18,8 +18,8 @@ Component({
   },
   // 组件的内部数据
   data: {
-    canIUse: wx.canIUse("button.open-type.getUserInfo"),
-    userInfo: {}, //用户信息
+    // canIUse: wx.canIUse("button.open-type.getUserInfo"),
+    // userInfo: {}, //用户信息
     settingInfo: {}, //用户的设置信息
     durationIndex: null,
     intervalIndex: null
@@ -43,30 +43,30 @@ Component({
         durationIndex: settingInfo.durationIndex || null,
         intervalIndex: settingInfo.intervalIndex || null
       });
-      this.getUserInfo();
+      // this.getUserInfo();
     },
-    getUserInfo: function() {
-      wx.getSetting({
-        success: res => {
-          if (res.authSetting["scope.userInfo"]) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            wx.getUserInfo({
-              success: res => {
-                console.log("userInfo: ", res.userInfo);
-                this.setData({
-                  userInfo: res.userInfo
-                });
-              }
-            });
-          } else {
-            console.log("xxxx");
-          }
-        },
-        fail: () => {
-          console.log("fail");
-        }
-      });
-    },
+    // getUserInfo: function() {
+    //   wx.getSetting({
+    //     success: res => {
+    //       if (res.authSetting["scope.userInfo"]) {
+    //         // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+    //         wx.getUserInfo({
+    //           success: res => {
+    //             console.log("userInfo: ", res.userInfo);
+    //             this.setData({
+    //               userInfo: res.userInfo
+    //             });
+    //           }
+    //         });
+    //       } else {
+    //         console.log("xxxx");
+    //       }
+    //     },
+    //     fail: () => {
+    //       console.log("fail");
+    //     }
+    //   });
+    // },
     // bindGetUserInfo: function(e) {
     //   this.setData({
     //     userInfo: e.detail.userInfo || {}

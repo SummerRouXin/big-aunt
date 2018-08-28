@@ -11,10 +11,12 @@
   </view>
   <view wx:else>
     <commonCalendar
+      bind:changesetted="changeSetted"
       hasSetted="{{hasSetted}}"
       durationRange="{{durationRange}}"
       intervalRange="{{intervalRange}}"
       whoseSetting="{{whoseSetting}}"
+      hasShowBackBtn="{{hasShowBackBtn}}"
     />
   </view>
 </view>
