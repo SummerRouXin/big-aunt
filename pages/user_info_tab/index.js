@@ -4,65 +4,31 @@ import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 Page({
   data: {
-    ...common.data,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    userInfo: {} ,   //用户信息
-    settingInfo: {}    //用户的设置信息
+    hasSetted: false,
+    durationRange: util.getNumberArr(1, 14), // 持续时间
+    intervalRange: util.getNumberArr(19, 100), // 间隔时间
+    whoseSetting: "my_setting_info", // 是“我自己”或者“别人”的设置
+    whoseHasSetted: "my_has_setted", // hasSetted字段是“我自己”或者“别人”
   },
-  onLoad: async function() {
-    this.getUserInfo();
-    await common.initApp.call(this)
-    this.hasFinished();
-  },
-  onShow: async function() {
-    this.getUserInfo();
-    await common.initApp.call(this)
-    this.hasFinished();
-  },
-  bindPickerGenderChange: common.bindPickerGenderChange,
-  bindPickerDurationChange: common.bindPickerDurationChange,
-  bindPickerIntervalChange: common.bindPickerIntervalChange,
-  bindPickerRecentChange: common.bindPickerRecentChange,
-  bindSubmitTap: common.bindSubmitTap,
-  bindSkipTap: common.bindSkipTap,
-  hasFinished: common.hasFinished,
-
-  getUserInfo: function() {
-    wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: (res) => {
-              console.log('userInfo: ', res.userInfo)
-              this.setData({
-                userInfo: res.userInfo
-              })
-            }
-          })
-        } else {
-          console.log('xxxx')
-        }
-      },
-      fail: () => {
-        console.log('fail')
-      }
-    })
-  },
-  bindGetUserInfo: function(e) {
+  onLoad: async function () {
+    let settingStatus = false;
+    try {
+      settingStatus = await apis.getSettingStatus(this.data.whoseHasSetted);
+    } catch (e) {
+      console.log("getSettingStatus", e);
+    }
     this.setData({
-      userInfo: e.detail.userInfo || {}
-    })
+      hasSetted: settingStatus
+    });
   },
-  bindGoToSetting: function(e) {
+  onShow: async function () {
+    const component = this.selectComponent("#calendar");
+    component && component.getinitApp();
+  },
+  changeSetted: function (e) {
+    const { hasSetted } = e.detail;
     this.setData({
-      hasSetted: false
-    })
-  },
-  bindMarkAuntMonthly: function(e) {
-
-  },
-  bindClearStorage: function(e) {
-    wx.clearStorage()
+      hasSetted,
+    });
   }
-})
+});

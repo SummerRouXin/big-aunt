@@ -1,3 +1,8 @@
 {
-	"navigationBarTitleText": "查询"
+	"navigationBarTitleText": "查询",
+	"usingComponents": {
+		"commonSetting": "/components/settings/index",
+		"commonCalendar": "/components/calendar/index",
+		"userInfo": "/components/userInfo/index"
+	}
 }

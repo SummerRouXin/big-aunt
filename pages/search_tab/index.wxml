@@ -1,6 +1,20 @@
-<import src="../common_setting/index.wxml" />
 <view>
-  <template is="setting"
-  data="{{ genderRange, genderIndex, durationRange, durationIndex, intervalRange, intervalIndex, recentDate, startDate, hasFinishedSubmit, sexChoose }}"
-  />
+  <view wx:if="{{hasSetted == false}}">
+    <commonSetting
+      bind:changesetted="changeSetted"
+      hasSetted="{{hasSetted}}"
+      durationRange="{{durationRange}}"
+      intervalRange="{{intervalRange}}"
+      whoseSetting="{{whoseSetting}}"
+      whoseHasSetted="{{whoseHasSetted}}"
+    />
+  </view>
+  <view wx:else>
+    <commonCalendar
+      hasSetted="{{hasSetted}}"
+      durationRange="{{durationRange}}"
+      intervalRange="{{intervalRange}}"
+      whoseSetting="{{whoseSetting}}"
+    />
+  </view>
 </view>

@@ -1,10 +1,8 @@
 {
   "pages":[
-
-
+    "pages/calendar_tab/index",
+    "pages/search_tab/index",
     "pages/user_info_tab/index"
-
-
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -14,10 +12,10 @@
   },
   "tabBar": {
     "list": [{
-      "pagePath": "pages/user_info_tab/index",
+      "pagePath": "pages/calendar_tab/index",
       "text": "日历"
     }, {
-      "pagePath": "pages/user_info_tab/index",
+      "pagePath": "pages/search_tab/index",
       "text": "查询"
     }, {
       "pagePath": "pages/user_info_tab/index",

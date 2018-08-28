@@ -1,4 +1,4 @@
-@import "../common_setting/index.wxss";
+@import "../../components/settings/index.wxss";
 
 .mark_aunt {
   display:flex;

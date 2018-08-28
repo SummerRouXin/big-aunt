@@ -1,6 +1,8 @@
 {
 	"navigationBarTitleText": "信息填写",
 	"usingComponents": {
-		"commonSetting": "../common_setting"
+		"commonSetting": "/components/settings/index",
+		"commonCalendar": "/components/calendar/index",
+		"userInfo": "/components/userInfo/index"
 	}
 }

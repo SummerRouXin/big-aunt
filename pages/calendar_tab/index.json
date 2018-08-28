@@ -1,7 +1,7 @@
 {
 	"navigationBarTitleText": "日历",
 	"usingComponents": {
-		"commonCalendar": "../common_calendar",
-		"commonSetting": "../common_setting"
+		"commonSetting": "/components/settings/index",
+		"commonCalendar": "/components/calendar/index"
 	}
 }
