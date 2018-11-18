@@ -14,5 +14,11 @@ Page({
     this.setData({
       hasSetted,
     });
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '',
+      path: '',
+    };
   }
 });

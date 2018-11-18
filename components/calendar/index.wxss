@@ -81,6 +81,7 @@
   color: #1c1c1c;
   font-size: 30rpx;
   position: relative;
+  border-radius: 40rpx;
 }
 .day_td_view_gray {
   color: #b5b5b5;
