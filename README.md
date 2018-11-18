@@ -10,7 +10,7 @@
 
 1.开发工具：
 
-Atom(https://atom.io/)，微信开发者工具(https://developers.weixin.qq.com/miniprogram/dev/devtools/debug.html)
+Atom( https://atom.io/ )， 微信开发者工具 ( https://developers.weixin.qq.com/miniprogram/dev/devtools/debug.html )
 本人是Atom的死忠粉，最主要原因是我觉得他长得好看。这边给大家推荐Atom写小程序的一个插件
 https://juejin.im/post/5b213182e51d4506c76699ad
 
@@ -33,22 +33,39 @@ https://juejin.im/post/5b213182e51d4506c76699ad
 
 
 ├── components               # 页面用的到所有组件
+
     ├── calendar             # 日历组件
+
     ├── settings             # 设置组件
+
     └── userInfo             # 用户信息组件
+
 ├── pages                    # 页面
+
     ├── calendar             # 日历页面
+
     ├── settings             # 设置页面
+
     └── userInfo             # 用户信息页面
+
 ├── utils                    # utils
+
     ├── regenerator-runtime  # 使用async await需引入
+
     ├── apis.js              # 接口定义
+
     ├── const.js             # 定义常量
+
     └── util.js              # 定义公用方法
+
 ├── app.js                   # app.js
+
 ├── app.json                 # 小程序的全局配置
+
 ├── app.wxss                 # 样式
+
 ├── package-lock.json        # package-lock.json
+
 └── project.config.json      # 个性化配置
 
 
