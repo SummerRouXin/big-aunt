@@ -19,7 +19,7 @@
             bindtap="bindDayTap" data-selectday="{{dayItem}}"
             wx:for="{{dayArr}}" wx:for-item="dayItem" wx:key="day_td_view">
             {{dayItem}}
-            <view wx:if="{{switchedArr[dayItem-1]}}" class="clock_icon"></view>
+            <view wx:if="{{whoseSetting === 'my_setting_info' && switchedArr[dayItem-1]}}" class="clock_icon"></view>
             <view wx:if="{{ovulateArr[dayItem-1]}}" class="ovulate_mark"></view>
             <view wx:if="{{safeArr[dayItem-1]}}" class="safe_mark"></view>
           </view>
@@ -38,7 +38,7 @@
     <view class="mark_icon ovulate_icon"></view><view class="mark_text">排卵期</view>
     <view class="mark_icon safe_icon"></view><view class="mark_text">安全期</view>
   </view>
-  <view wx:if="{{hasClick}}" class="clock">
+  <view wx:if="{{whoseSetting === 'my_setting_info' && hasClick}}" class="clock">
     <view class="clock_title">{{selectYear || '--'}}年{{selectMonth || '--'}}月{{selectDay || '--'}}日打卡信息</view>
     <view>
       <view class="clock_text">是否打卡</view>
