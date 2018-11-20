@@ -1,15 +1,5 @@
-<!-- <import src="my_info.wxml" />
-
 <view>
-  <template
-    is="my_info"
-    data="{{ canIUse, userInfo, durationRange, durationIndex, intervalRange, intervalIndex, settingInfo }}"
-  />
-</view> -->
-
-
-<view>
-  <view wx:if="{{hasSetted == false}}">
+  <view wx:if="{{hasSetted === false}}">
     <commonSetting
       bind:changesetted="changeSetted"
       hasSetted="{{hasSetted}}"

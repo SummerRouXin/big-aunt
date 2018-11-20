@@ -32,8 +32,8 @@ https://juejin.im/post/5b213182e51d4506c76699ad
 上面介绍了小程序需要实现的功能，为了实现这些功能我们一共设计了三个页面，分别是：日历页面、查询页面以及个人信息页面。
 其中，日历页面主要是设置自己的姨妈时间，计算经期、安全期、排卵期并且能够记录运动打卡。
 
-![日历设置界面](./readmePic/calendar_set.png)
-![日历展示界面](./readmePic/calendar_show.png)
+![日历设置界面](./readmePic/calendar_set.png){: width="282px" height="487px"}
+![日历展示界面](./readmePic/calendar_show.png){: width="282px" height="487px"}
 
 查询页面的功能主要是查询他人的经期、安全期、排卵期，毕竟这个小程序不止面向妹子使用嘛😄😄，页面与日历页面基本一致，去掉了打卡功能。
 
@@ -45,58 +45,59 @@ https://juejin.im/post/5b213182e51d4506c76699ad
 
 下面是项目的组件以及页面目录：
 
+```
 ├── components               # 页面用的到所有组件
-
     ├── calendar             # 日历组件
-
     ├── settings             # 设置组件
-
     └── userInfo             # 用户信息组件
-
 ├── pages                    # 页面
-
     ├── calendar             # 日历页面
-
     ├── settings             # 设置页面
-
     └── userInfo             # 用户信息页面
-
 ├── utils                    # utils
-
     ├── regenerator-runtime  # 使用async await需引入
-
     ├── apis.js              # 接口定义
-
     ├── const.js             # 定义常量
-
     └── util.js              # 定义公用方法
-
 ├── app.js                   # app.js
-
 ├── app.json                 # 小程序的全局配置
-
 ├── app.wxss                 # 样式
-
 ├── package-lock.json        # package-lock.json
-
 └── project.config.json      # 个性化配置
+```
 
+## 数据存储：
+为了先实现前端的功能，我们这边的数据目前都是存储在了本地，使用了wx.getStorage和wx.setStorage来对数据进行读取与存储。为了以后数据能够方便地扩展到数据库，我们这边统一在api文件中通过异步的方式进行包装。
 
-数据存储：
-api采用localStorage方式
+```
+getSettingInfo: (key) => {    //获取setting信息
+  return new Promise((resolve, reject) => {
+    wx.getStorage({
+      key: key,
+      success: function(res) {
+        resolve(util.jsonParse(res.data))
+      },
+      fail: function(e) {
+        console.log('getSettingInfo fail', e)
+        resolve({})
+      }
+    })
+  })
+}
+```
 
-具体实现：
+数据存储部分等后续实现会再更新
 
-遇到的问题：
 
 待解决问题：
+1、对我自己来说，大姨妈来之前的日期与之后的日期其实是有两个需求：大姨妈来之后的主要是预测，就是我们目前已经实现了的功能；之前其实是已经发生了的，需要想把每次的时间记录下来，方便后面进行分析。所以后面需要实现记录每次大姨妈的时间，并进行分析。
+2、实现数据存储部分的逻辑。
 
 `github`地址：
 https://github.com/SummerRouXin/big-aunt
 
 预览
-![小程序二维码]()
+![小程序二维码](./readmePic/qrcode.jpg)
 
 bug:
 1、标记当天
-2、日历页面设置之后同步到设置页面
