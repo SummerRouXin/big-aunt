@@ -123,6 +123,16 @@ const getCalendarDayArr = (month = currMonth, year = currYear) => {
   }
 }
 
+const isToday = (str) => {
+  var d = new Date(str.replace(/-/g, "/"));
+  var todaysDate = new Date();
+  if (d.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   getCurrentYearMonth,
   getNumberArr,
@@ -137,4 +147,5 @@ module.exports = {
   newArray,
   getMonthLines,
   getCalendarDayArr,
+  isToday,
 }

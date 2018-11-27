@@ -157,6 +157,13 @@
   bottom: 5rpx;
 }
 
+.today_mark {
+  border: solid 1rpx red;
+  width:90rpx;
+  height:90rpx;
+  line-height:90rpx;
+}
+
 .checkbox {
   position: absolute;
   bottom: 0;

@@ -32,6 +32,7 @@ Component({
     durationIndex: null,
     intervalIndex: null,
     recentDate: "",
+    isCurrentYearMonth: false,   // 判断当前是年月是否与当天的相同，用于标记是否是今天
   },
   async attached() {
     this.getInitData();
@@ -259,7 +260,7 @@ Component({
       this.data.firstAuntArr.forEach(firstAuntItem => {
         for (let i = 1; i <= monthLength; i++) {
           if (((firstAuntItem - i >= 10 && firstAuntItem - i <= 19)
-              || (i - firstAuntItem >= intervalLength - 19 
+              || (i - firstAuntItem >= intervalLength - 19
                 && i - firstAuntItem <= intervalLength - 10
              ))
               && tempSafeArr[i] == false
